@@ -6,7 +6,7 @@
 .pnp.js
 src/utils/firebase/firebase.json
 src/utils/firebase/uberdriver-2941d-firebase-adminsdk-3t5g9-aec0b755d2.json
-
+.env
 
 # testing
 /coverage
