@@ -1,0 +1,24 @@
+// Define color variables
+$primary-color: #2F4858;
+$background-color: #FFFFFF; // Keeping the background color as white for reference
+
+// Apply styles to .topbar
+.topbar {
+  width: 100%;
+  height: 50px;
+  background-color: $primary-color; // Set background color to primary color
+  color: white; // Set font color to white
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  h1 {
+    // If needed, you can add styles for h1 inside .topbar here
+  }
+}
+
+.bruno-ace-regular {
+  font-family: "Bruno Ace", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
