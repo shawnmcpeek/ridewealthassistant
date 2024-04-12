@@ -5,6 +5,7 @@ import mileageData from "./mileage.component.json";
 const MileageComponent = () => {
   const [startMileage, setStartMileage] = useState("");
   const [endMileage, setEndMileage] = useState("");
+  const [mileageDate, setMileageDate] = useState(""); // New state for mileage date
 
   const calculateTotalMileage = () => {
     if (!startMileage || !endMileage) {
@@ -18,19 +19,36 @@ const MileageComponent = () => {
     return end - start;
   };
 
-  const saveMileage = () => {
+  const saveStartMileage = () => {
+    const currentDate = new Date().toISOString().slice(0, 10); // Get current date
+    setMileageDate(currentDate); // Set mileage date to current date
+    const start = parseFloat(startMileage);
+    if (!isNaN(start)) {
+      const mileageData = {
+        date: currentDate,
+        startMileage: start,
+      };
+      console.log("Start mileage saved:", mileageData);
+      setStartMileage(""); // Clear start mileage input
+    } else {
+      console.error("Invalid start mileage input.");
+    }
+  };
+
+  const saveEndMileage = () => {
     const totalMileage = calculateTotalMileage();
     if (totalMileage !== null) {
+      const end = parseFloat(endMileage);
       const mileageData = {
+        date: mileageDate,
         startMileage: parseFloat(startMileage),
-        endMileage: parseFloat(endMileage),
+        endMileage: end,
         totalMileage: totalMileage,
       };
-      console.log("Mileage data:", mileageData);
-      setStartMileage("");
-      setEndMileage("");
+      console.log("End mileage saved:", mileageData);
+      setEndMileage(""); // Clear end mileage input
     } else {
-      console.error("Invalid start or end mileage input.");
+      console.error("Invalid end mileage input.");
     }
   };
 
@@ -45,6 +63,10 @@ const MileageComponent = () => {
         placeholder="Start Mileage"
       />
       <br />
+      <button className="save-mileage-button" onClick={saveStartMileage}>
+        Save Start Mileage
+      </button>
+      <br />
       <input
         className="end-mileage-input"
         type="text"
@@ -53,8 +75,8 @@ const MileageComponent = () => {
         placeholder="End Mileage"
       />
       <br />
-      <button className="save-mileage-button" onClick={saveMileage}>
-        Save Mileage
+      <button className="save-mileage-button" onClick={saveEndMileage}>
+        Save End Mileage
       </button>
     </div>
   );
