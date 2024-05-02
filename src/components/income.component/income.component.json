@@ -1,4 +1,20 @@
 {
-    "incomeEntries": []
+    "incomeData": [
+      {
+        "date": "2024-04-23",
+        "amount": 1000,
+        "source": "Client A"
+      },
+      {
+        "date": "2024-04-24",
+        "amount": 1500,
+        "source": "Client B"
+      },
+      {
+        "date": "2024-04-25",
+        "amount": 1200,
+        "source": "Client C"
+      }
+    ]
   }
   

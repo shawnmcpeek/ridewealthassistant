@@ -1,37 +1,34 @@
 import React, { useState } from "react";
-import expenseData from "./expense.component.json"; // Import expense data from JSON file
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { app } from "../../utils/firebase/firebase.utils";
 
 const ExpenseComponent = () => {
-  // State variables to store form data
   const [date, setDate] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");
 
-  // Function to handle form submission
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Process the form data here (e.g., submit to backend)
-    console.log("Submitted:", { date, amount, category });
-    // Save expense data to JSON file
-    saveExpense();
-    // Clear the form fields
-    setDate("");
-    setAmount("");
-    setCategory("");
-  };
-
-  const saveExpense = () => {
-    // Prepare expense entry object
-    const newExpenseEntry = {
+    const expenseData = {
       date: date,
       amount: parseFloat(amount),
       category: category,
     };
-    // Add new expense entry to existing data
-    expenseData.expenseEntries.push(newExpenseEntry);
-    // Update JSON file
-    console.log("Expense data updated:", expenseData);
-    // In a real-world application, you might want to save this data to a server or database instead
+
+    console.log("Expense data to be saved:", expenseData);
+
+    try {
+      const docRef = await addDoc(
+        collection(getFirestore(app), "expenses"),
+        expenseData
+      );
+      console.log("Expense document written with ID: ", docRef.id);
+      setDate("");
+      setAmount("");
+      setCategory("");
+    } catch (error) {
+      console.error("Error adding document: ", error);
+    }
   };
 
   return (
@@ -81,7 +78,6 @@ const ExpenseComponent = () => {
             <option value="Taxes and licenses">Taxes and licenses</option>
             <option value="Travel and meals">Travel and meals</option>
             <option value="Utilities">Utilities</option>
-            {/* Add more options from IRS schedule C business categories */}
           </select>
         </div>
         <button type="submit">Submit</button>

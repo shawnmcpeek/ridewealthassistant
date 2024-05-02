@@ -15,7 +15,10 @@ import firebaseConfig from "./firebase.json";
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
-const firestore = getFirestore(app);
+const firestore = getFirestore(app); // Define firestore here
+
+// Log the Firestore object for inspection
+console.log("Firestore instance:", firestore);
 
 // Define sign-in with Google Popup function
 const signInWithGooglePopup = async () => {
@@ -40,7 +43,7 @@ export {
   app,
   analytics,
   auth,
-  firestore,
+  firestore, // Export firestore here
   signInWithGooglePopup,
   signInAuthUserWithEmailAndPassword,
 };

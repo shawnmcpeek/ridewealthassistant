@@ -1,97 +1,144 @@
 import React, { useState } from "react";
-import incomeData from "../income.component/income.component.json";
+import ProfitComponent from "./profit.component";
 
-const TaxEstimateComponent = () => {
-  // State variables to store form data and results
-  const [year, setYear] = useState("");
-  const [quarter, setQuarter] = useState("");
+const ProfitTaxComponent = () => {
+  const [showProfitCalculations, setShowProfitCalculations] = useState(false);
+  const [showTaxEstimates, setShowTaxEstimates] = useState(false);
+  const [profitYear, setProfitYear] = useState("");
+  const [profitQuarter, setProfitQuarter] = useState("");
+  const [taxYear, setTaxYear] = useState("");
+  const [taxQuarter, setTaxQuarter] = useState("");
   const [grossTaxesData, setGrossTaxesData] = useState(null);
   const [netTaxesData, setNetTaxesData] = useState(null);
 
-  // Function to calculate taxes for each financial quarter based on sales
-  const calculateGrossTaxes = () => {
-    // Access data from imported JSON files
-    const { income } = incomeData;
-
-    // Filter income data for the selected year and quarter
-    const filteredIncome = income.filter(
-      (item) => item.year === year && item.quarter === quarter
-    );
-
-    // Calculate total sales for the quarter
-    const totalSales = filteredIncome.reduce(
-      (total, item) => total + item.amount,
-      0
-    );
-
-    // Calculate IRS and state estimated taxes (15% and 5% of total sales respectively)
-    const irsTax = totalSales * 0.15;
-    const stateTax = totalSales * 0.05;
-
-    // Update state with calculated taxes data for sales
-    setGrossTaxesData({ irsTax, stateTax });
+  const handleProfitCalculationClick = () => {
+    setShowProfitCalculations(true);
+    setGrossTaxesData(null);
+    setNetTaxesData(null);
   };
 
-  // Function to calculate taxes for each financial quarter based on profit
-  const calculateNetTaxes = () => {
-    // Access data from imported JSON files
-    const { income } = incomeData;
-
-    // Filter income data for the selected year and quarter
-    const filteredIncome = income.filter(
-      (item) => item.year === year && item.quarter === quarter
-    );
-
-    // Calculate total profit for the quarter (including expenses and mileage)
-    const totalProfit = filteredIncome.reduce(
-      (total, item) => total + item.profit,
-      0
-    );
-
-    // Calculate IRS and state estimated taxes (15% and 5% of total profit respectively)
-    const irsTax = totalProfit * 0.15;
-    const stateTax = totalProfit * 0.05;
-
-    // Update state with calculated taxes data for profit
-    setNetTaxesData({ irsTax, stateTax });
+  const handleTaxEstimateClick = (type) => {
+    calculateTaxes(type);
+    setShowProfitCalculations(false);
   };
 
-  // Function to handle form submission for taxes estimation
-  const handleTaxesSubmit = (event) => {
-    event.preventDefault();
+  const calculateTaxes = (type) => {
+    // Access data from your sources (e.g., incomeData, expenseData, mileageData)
+    // Here you'll need to perform the tax calculations based on the selected type
+    // For simplicity, let's assume it's a placeholder function
+    const irsTax = 1000; // Placeholder value for demonstration
+    const stateTax = 500; // Placeholder value for demonstration
 
-    // Check if year and quarter are selected
-    if (year === "" || quarter === "") {
-      alert("Please select both year and quarter.");
-      return;
+    if (type === "gross") {
+      setGrossTaxesData({ irsTax, stateTax });
+    } else if (type === "net") {
+      setNetTaxesData({ irsTax, stateTax });
     }
+  };
 
-    // Calculate taxes for both gross and net profit
-    calculateGrossTaxes();
-    calculateNetTaxes();
+  // Function to handle profit quarter selection
+  const handleProfitQuarterChange = (event) => {
+    setProfitQuarter(event.target.value);
+  };
+
+  // Function to handle profit year selection
+  const handleProfitYearChange = (event) => {
+    setProfitYear(event.target.value);
+  };
+
+  // Function to handle tax quarter selection
+  const handleTaxQuarterChange = (event) => {
+    setTaxQuarter(event.target.value);
+  };
+
+  // Function to handle tax year selection
+  const handleTaxYearChange = (event) => {
+    setTaxYear(event.target.value);
   };
 
   return (
     <div>
-      <h2>Tax Estimation</h2>
-      <form onSubmit={handleTaxesSubmit}>
-        {/* Input fields for selecting year and quarter */}
-        <button type="submit">Calculate Estimated Taxes</button>
-      </form>
-      {/* Display taxes data */}
-      {grossTaxesData && netTaxesData && (
+      <h2>Profit and Tax Calculations</h2>
+      <div>
+        <h3>Profit Calculations</h3>
         <div>
-          <p>Gross Profit Tax Estimate (Sales):</p>
-          <p>IRS Tax: ${grossTaxesData.irsTax}</p>
-          <p>State Tax: ${grossTaxesData.stateTax}</p>
-          <br />
-          <p>Net Profit Tax Estimate (Profit):</p>
-          <p>IRS Tax: ${netTaxesData.irsTax}</p>
-          <p>State Tax: ${netTaxesData.stateTax}</p>
+          <label>Select Quarter:</label>
+          <select value={profitQuarter} onChange={handleProfitQuarterChange}>
+            <option value="">Select Quarter</option>
+            <option value="Q1">Q1</option>
+            <option value="Q2">Q2</option>
+            <option value="Q3">Q3</option>
+            <option value="Q4">Q4</option>
+          </select>
+          <label>Select Year:</label>
+          <select value={profitYear} onChange={handleProfitYearChange}>
+            <option value="">Select Year</option>
+            <option value="24">2024</option>
+            <option value="25">2025</option>
+            <option value="26">2026</option>
+            <option value="27">2027</option>
+            {/* Populate with years as needed */}
+          </select>
         </div>
-      )}
+        <h4>Calculate profit (income-expenses) without considering mileage</h4>
+        <button onClick={handleProfitCalculationClick}>
+          Income Calc 1 (Income - Expenses)
+        </button>
+        <h4>Calculate profit considering mileage (income-expenses-mileage)</h4>
+        <button onClick={() => handleTaxEstimateClick("mileage")}>
+          Income Calc 2 (Income - Expenses - Mileage)
+        </button>
+        {showProfitCalculations && <ProfitComponent />}
+      </div>
+      <div>
+        <h3>Tax Estimates</h3>
+        <div>
+          <label>Select Quarter:</label>
+          <select value={taxQuarter} onChange={handleTaxQuarterChange}>
+            <option value="">Select Quarter</option>
+            <option value="Q1">Q1</option>
+            <option value="Q2">Q2</option>
+            <option value="Q3">Q3</option>
+            <option value="Q4">Q4</option>
+          </select>
+          <label>Select Year:</label>
+          <select value={taxYear} onChange={handleTaxYearChange}>
+            <option value="">Select Year</option>
+            <option value="24">2024</option>
+            <option value="25">2025</option>
+            <option value="26">2026</option>
+            <option value="27">2027</option>
+            {/* Populate with years as needed */}
+          </select>
+        </div>
+        <h4>Calculate gross profit tax estimate</h4>
+        <h4>This calculates taxes based on income only</h4>
+        <button onClick={() => handleTaxEstimateClick("gross")}>
+          Gross Profit Tax Estimate
+        </button>
+        <h4>Calculate net profit tax estimate</h4>
+        <h4>This calculates taxes based on profit (income-expenses-mileage)</h4>
+        <button onClick={() => handleTaxEstimateClick("net")}>
+          Net Profit Tax Estimate
+        </button>
+        {/* Display tax estimates */}
+        {grossTaxesData && (
+          <div>
+            <p>Gross Profit Tax Estimate:</p>
+            <p>IRS Tax: ${grossTaxesData.irsTax}</p>
+            <p>State Tax: ${grossTaxesData.stateTax}</p>
+          </div>
+        )}
+        {netTaxesData && (
+          <div>
+            <p>Net Profit Tax Estimate:</p>
+            <p>IRS Tax: ${netTaxesData.irsTax}</p>
+            <p>State Tax: ${netTaxesData.stateTax}</p>
+          </div>
+        )}
+      </div>
     </div>
   );
 };
 
-export default TaxEstimateComponent;
+export default ProfitTaxComponent;

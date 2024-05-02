@@ -6,7 +6,13 @@ import TopBarComponent from "./components/topbar.component/topbar.component";
 import MileageComponent from "./components/mileage.component/mileage.component.jsx";
 import ExpenseComponent from "./components/expense.component/expense.component.jsx";
 import IncomeComponent from "./components/income.component/income.component.jsx";
-import TaxesComponent from "./components/taxes.component/taxes.component.jsx";
+import {
+  ProfitCalculation1,
+  ProfitCalculation2,
+  TimeframeSelector,
+  GrossProfitTaxEstimate,
+  NetProfitTaxEstimate,
+} from "./components/taxes.component/taxprofit.component.js";
 import UserComponent from "./components/user.component/user.component.jsx";
 import "./App.scss";
 
@@ -29,7 +35,16 @@ function App() {
           {activeComponent === "mileage" && <MileageComponent />}
           {activeComponent === "expenses" && <ExpenseComponent />}
           {activeComponent === "income" && <IncomeComponent />}
-          {activeComponent === "taxes" && <TaxesComponent />}
+          {activeComponent === "taxes" && (
+            <>
+              <TimeframeSelector />
+              <ProfitCalculation1 />
+              <ProfitCalculation2 />
+              <GrossProfitTaxEstimate />
+              <NetProfitTaxEstimate />
+            </>
+          )}
+
           {activeComponent === "user" && <UserComponent />}
           <NavbarComponent
             toggleComponentVisibility={toggleComponentVisibility}

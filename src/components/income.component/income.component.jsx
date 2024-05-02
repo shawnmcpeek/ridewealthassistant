@@ -1,39 +1,48 @@
 import React, { useState } from "react";
-import incomeData from "./income.component.json"; // Import income data from JSON file
+import { getFirestore, collection, addDoc } from "firebase/firestore";
+import { app } from "../../utils/firebase/firebase.utils";
 
 const IncomeComponent = () => {
-  // State variables to store form data
   const [date, setDate] = useState("");
   const [amount, setAmount] = useState("");
+  const [source, setSource] = useState("");
 
-  // Function to handle form submission
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Process the form data here (e.g., submit to backend)
-    console.log("Submitted:", { date, amount });
-    // Save income data to JSON file
-    saveIncome();
-    // Clear the form fields
-    setDate("");
-    setAmount("");
-  };
 
-  const saveIncome = () => {
-    // Prepare income entry object
-    const newIncomeEntry = {
-      date: date,
-      amount: parseFloat(amount),
+    const currentDate = new Date(date);
+    const incomeValue = parseFloat(amount);
+
+    if (isNaN(incomeValue) || !currentDate || !source) {
+      console.error("Invalid income input.");
+      return;
+    }
+
+    const incomeData = {
+      date: currentDate,
+      amount: incomeValue,
+      source: source,
     };
-    // Add new income entry to existing data
-    incomeData.incomeEntries.push(newIncomeEntry);
-    // Update JSON file
-    console.log("Income data updated:", incomeData);
-    // In a real-world application, you might want to save this data to a server or database instead
+
+    console.log("Income data to be saved:", incomeData);
+
+    try {
+      const docRef = await addDoc(
+        collection(getFirestore(app), "income"),
+        incomeData
+      );
+      console.log("Income document written with ID:", docRef.id);
+      setDate("");
+      setAmount("");
+      setSource("");
+    } catch (error) {
+      console.error("Error adding document:", error);
+    }
   };
 
   return (
-    <div>
-      <h2>Income Component</h2>
+    <div className="income-container">
+      <h2 className="income-heading">Enter Income</h2>
       <form onSubmit={handleSubmit}>
         <div>
           <label>Date of Income:</label>
@@ -53,7 +62,16 @@ const IncomeComponent = () => {
             required
           />
         </div>
-        <button type="submit">Submit</button>
+        <div>
+          <label>Income Source:</label>
+          <input
+            type="text"
+            value={source}
+            onChange={(e) => setSource(e.target.value)}
+            required
+          />
+        </div>
+        <button type="submit">Save Income</button>
       </form>
     </div>
   );
