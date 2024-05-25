@@ -1,4 +1,14 @@
-import React, { useState } from "react";
+import React from 'react';
+  
+  const Taxprofit.component../../../utils/firebase/firebase.utils
+	return (
+	  <div>
+	  </div>
+	);
+  }
+  
+  export default Taxprofit.component;
+  import React, { useState } from "react";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { firestore } from "../../utils/firebase/firebase.utils";
 

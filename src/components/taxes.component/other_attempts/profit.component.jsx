@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
-import { firestore } from "../../utils/firebase/firebase.utils";
+import { firestore } from "../../../utils/firebase/firebase.utils";
 
 const ProfitComponent = () => {
   // State variables to store calculated profits

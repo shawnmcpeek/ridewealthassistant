@@ -3,17 +3,12 @@ import { BrowserRouter as Router } from "react-router-dom";
 import DefaultContentComponent from "./components/default.component/default.component";
 import NavbarComponent from "./components/navbar.component/navbar.component";
 import TopBarComponent from "./components/topbar.component/topbar.component";
-import MileageComponent from "./components/mileage.component/mileage.component.jsx";
-import ExpenseComponent from "./components/expense.component/expense.component.jsx";
-import IncomeComponent from "./components/income.component/income.component.jsx";
-import {
-  ProfitCalculation1,
-  ProfitCalculation2,
-  TimeframeSelector,
-  GrossProfitTaxEstimate,
-  NetProfitTaxEstimate,
-} from "./components/taxes.component/taxprofit.component.js";
-import UserComponent from "./components/user.component/user.component.jsx";
+import MileageComponent from "./components/mileage.component/mileage.component";
+import ExpenseComponent from "./components/expense.component/expense.component";
+import IncomeComponent from "./components/income.component/income.component";
+//import MileageCalculator from "./components/taxes.component/other_attempts/mileage.component";
+import MileagePullComponent from "./components/taxes.component/mileage_pull.component";
+import UserComponent from "./components/user.component/user.component";
 import "./App.scss";
 
 function App() {
@@ -37,11 +32,14 @@ function App() {
           {activeComponent === "income" && <IncomeComponent />}
           {activeComponent === "taxes" && (
             <>
-              <TimeframeSelector />
+              <MileagePullComponent />
+              {/* Uncomment below components if needed */}
+              {/* <TimeframeSelector />
+              <MileageCalculator />
               <ProfitCalculation1 />
               <ProfitCalculation2 />
               <GrossProfitTaxEstimate />
-              <NetProfitTaxEstimate />
+              <NetProfitTaxEstimate /> */}
             </>
           )}
 

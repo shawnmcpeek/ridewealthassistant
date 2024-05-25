@@ -1,52 +1,112 @@
 import React, { useState } from "react";
-import "./mileage.component.scss";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
-import { app } from "../../utils/firebase/firebase.utils";
+import { collection, addDoc } from "firebase/firestore";
+import { firestore } from "../../utils/firebase/firebase.utils";
 
 const MileageComponent = () => {
-  const [newMileage, setNewMileage] = useState("");
+  const [startMileage, setStartMileage] = useState("");
+  const [savedStartMileage, setSavedStartMileage] = useState(""); // New state for saved start mileage
+  const [startDate, setStartDate] = useState("");
+  const [endMileage, setEndMileage] = useState("");
+  const [endDate, setEndDate] = useState("");
 
-  const handleMileageSave = async () => {
-    const currentDate = new Date();
-    const mileageValue = parseFloat(newMileage);
+  const handleStartMileageChange = (e) => {
+    setStartMileage(e.target.value);
+  };
 
-    if (!isNaN(mileageValue)) {
-      const mileageData = {
-        date: currentDate,
-        mileage: mileageValue,
+  const handleStartDateChange = (e) => {
+    setStartDate(e.target.value);
+  };
+
+  const handleEndMileageChange = (e) => {
+    setEndMileage(e.target.value);
+  };
+
+  const handleEndDateChange = (e) => {
+    setEndDate(e.target.value);
+  };
+
+  const handleSaveStartMileage = () => {
+    // Save start mileage locally
+    setSavedStartMileage(startMileage);
+  };
+
+  const handleSubmit = async () => {
+    try {
+      // Format the data for Firestore database entry
+      const startMileageEntry = {
+        date: new Date(startDate),
+        mileage: parseInt(startMileage),
+        start_end: "start",
       };
 
-      console.log("Mileage data to be saved:", mileageData);
+      const endMileageEntry = {
+        date: new Date(endDate),
+        mileage: parseInt(endMileage),
+        start_end: "end",
+      };
 
-      try {
-        const docRef = await addDoc(
-          collection(getFirestore(app), "drivermileage"), // Use `app` instead of `firestore`
-          mileageData
-        );
-        console.log("Mileage document written with ID: ", docRef.id);
-        setNewMileage("");
-      } catch (error) {
-        console.error("Error adding document: ", error);
-      }
-    } else {
-      console.error("Invalid mileage input.");
+      // Save startMileageEntry and endMileageEntry to Firestore database
+      const startMileageDocRef = await addDoc(
+        collection(firestore, "drivermileage"),
+        startMileageEntry
+      );
+
+      const endMileageDocRef = await addDoc(
+        collection(firestore, "drivermileage"),
+        endMileageEntry
+      );
+
+      console.log(
+        "Start Mileage Document added with ID: ",
+        startMileageDocRef.id
+      );
+      console.log("End Mileage Document added with ID: ", endMileageDocRef.id);
+
+      // Reset input fields after submission
+      setStartMileage("");
+      setStartDate("");
+      setEndMileage("");
+      setEndDate("");
+      setSavedStartMileage(""); // Clear saved start mileage
+    } catch (error) {
+      console.error("Error adding mileage entry: ", error);
     }
   };
 
   return (
-    <div className="mileage-container">
-      <h2 className="mileage-heading">Enter Mileage</h2>
-      <input
-        className="mileage-input"
-        type="text"
-        value={newMileage}
-        onChange={(e) => setNewMileage(e.target.value)}
-        placeholder="Enter Mileage"
-      />
-      <br />
-      <button className="save-mileage-button" onClick={handleMileageSave}>
-        Save Mileage
-      </button>
+    <div>
+      <h2>Mileage Entry</h2>
+      <label>
+        Start Mileage:
+        <input
+          type="number"
+          value={startMileage}
+          onChange={handleStartMileageChange}
+          placeholder={
+            savedStartMileage ? savedStartMileage : "Enter Start Mileage"
+          }
+        />
+      </label>
+      <label>
+        Start Date:
+        <input type="date" value={startDate} onChange={handleStartDateChange} />
+      </label>
+      {/* Button to save start mileage */}
+      <button onClick={handleSaveStartMileage}>Save Start Mileage</button>
+      <label>
+        End Mileage:
+        <input
+          type="number"
+          value={endMileage}
+          onChange={handleEndMileageChange}
+          placeholder="End Mileage"
+        />
+      </label>
+      <label>
+        End Date:
+        <input type="date" value={endDate} onChange={handleEndDateChange} />
+      </label>
+      <button onClick={handleSubmit}>Submit Mileage Data</button>
     </div>
   );
 };
