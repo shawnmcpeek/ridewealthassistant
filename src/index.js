@@ -12,7 +12,7 @@ const checkAuthState = () => {
       // User is signed in, you can proceed with rendering the app
       renderApp();
     } else {
-      renderApp();// No user is signed in, handle accordingly (e.g., redirect to sign-in page)
+      renderApp(); // No user is signed in, handle accordingly (e.g., redirect to sign-in page)
       console.log("No user is signed in");
     }
   });

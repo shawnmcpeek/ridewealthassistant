@@ -18,18 +18,24 @@ const ExpenseComponent = () => {
     console.log("Expense data to be saved:", expenseData);
 
     try {
-      const docRef = await addDoc(
-        collection(getFirestore(app), "expenses"),
-        expenseData
-      );
-      console.log("Expense document written with ID: ", docRef.id);
+      const firestoreInstance = getFirestore(app);
+      console.log("Firestore instance:", firestoreInstance);
+
+      const expensesCollection = collection(firestoreInstance, "expenses");
+      console.log("Expenses collection reference:", expensesCollection);
+
+      const docRef = await addDoc(expensesCollection, expenseData);
+      console.log("Expense document written with ID:", docRef.id);
+
       setDate("");
       setAmount("");
       setCategory("");
     } catch (error) {
-      console.error("Error adding document: ", error);
+      console.error("Error adding document:", error);
     }
   };
+
+  console.log("Rendered ExpenseComponent");
 
   return (
     <div>

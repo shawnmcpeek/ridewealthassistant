@@ -1,54 +1,48 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
-import DefaultContentComponent from "./components/default.component/default.component";
-import NavbarComponent from "./components/navbar.component/navbar.component";
-import TopBarComponent from "./components/topbar.component/topbar.component";
+import React from "react";
+import { BrowserRouter as Router, Link, Route, Routes } from "react-router-dom";
 import MileageComponent from "./components/mileage.component/mileage.component";
-import ExpenseComponent from "./components/expense.component/expense.component";
-import IncomeComponent from "./components/income.component/income.component";
-//import MileageCalculator from "./components/taxes.component/other_attempts/mileage.component";
 import MileagePullComponent from "./components/taxes.component/mileage_pull.component";
-import UserComponent from "./components/user.component/user.component";
-import "./App.scss";
+import ExpenseComponent from "./components/expenses.component/expense.component";
+import IncomeComponent from "./components/income.component/income.component.jsx";
+
+function Dashboard() {
+  return (
+    <div>
+      <nav>
+        <ul>
+          <li>
+            <Link to="/mileage">Mileage</Link>
+          </li>
+          <li>
+            <Link to="/mileage_calculator">Mileage Calculator</Link>
+          </li>
+          <li>
+            <Link to="/expense">Expenses</Link>
+          </li>
+          <li>
+            <Link to="/income">Income</Link>
+          </li>
+        </ul>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/mileage" element={<MileageComponent />} />
+        <Route path="/mileage_calculator" element={<MileagePullComponent />} />
+        <Route path="/expense" element={<ExpenseComponent />} />
+        <Route path="/income" element={<IncomeComponent />} />
+      </Routes>
+    </div>
+  );
+}
+
+function Home() {
+  return <h1>Welcome to the Dashboard</h1>;
+}
 
 function App() {
-  const [activeComponent, setActiveComponent] = useState("default");
-
-  const toggleComponentVisibility = (componentName) => {
-    setActiveComponent((prevComponent) =>
-      prevComponent === componentName ? "default" : componentName
-    );
-  };
-
   return (
     <Router>
-      <div className="App">
-        <header className="App-header">
-          <TopBarComponent />
-          {/* Render the active component based on state */}
-          {activeComponent === "default" && <DefaultContentComponent />}
-          {activeComponent === "mileage" && <MileageComponent />}
-          {activeComponent === "expenses" && <ExpenseComponent />}
-          {activeComponent === "income" && <IncomeComponent />}
-          {activeComponent === "taxes" && (
-            <>
-              <MileagePullComponent />
-              {/* Uncomment below components if needed */}
-              {/* <TimeframeSelector />
-              <MileageCalculator />
-              <ProfitCalculation1 />
-              <ProfitCalculation2 />
-              <GrossProfitTaxEstimate />
-              <NetProfitTaxEstimate /> */}
-            </>
-          )}
-
-          {activeComponent === "user" && <UserComponent />}
-          <NavbarComponent
-            toggleComponentVisibility={toggleComponentVisibility}
-          />
-        </header>
-      </div>
+      <Dashboard />
     </Router>
   );
 }
