@@ -2,20 +2,16 @@ import React, { useState, useEffect } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { firestore } from "../../utils/firebase/firebase.utils";
 import TimeSelectComponent from "../time_select.component/time_select.component";
-import mileageRates from "./mileagerates";
 
-const MileagePullComponent = () => {
+const IncomePullComponent = () => {
   const [selectedQuarter, setSelectedQuarter] = useState("Q1");
-  const [selectedYear, setSelectedYear] = useState("2024"); // Changed to string
-  const [totalMileage, setTotalMileage] = useState(0);
-  const [mileageExpense, setMileageExpense] = useState(0);
+  const [selectedYear, setSelectedYear] = useState("2024");
+  const [totalIncome, setTotalIncome] = useState(0);
 
   useEffect(() => {
-    const fetchMileageEntries = async () => {
+    const fetchIncomeEntries = async () => {
       try {
-        const querySnapshot = await getDocs(
-          collection(firestore, "drivermileage")
-        );
+        const querySnapshot = await getDocs(collection(firestore, "income"));
         const entries = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
@@ -44,17 +40,14 @@ const MileagePullComponent = () => {
           });
         }
 
-        const totalMileage = calculateTotalMileage(filteredEntries);
-        setTotalMileage(totalMileage);
-
-        const mileageExpense = calculateMileageExpense(totalMileage);
-        setMileageExpense(mileageExpense);
+        const totalIncome = calculateTotalIncome(filteredEntries);
+        setTotalIncome(totalIncome);
       } catch (error) {
-        console.error("Error fetching mileage entries:", error);
+        console.error("Error fetching income entries:", error);
       }
     };
 
-    fetchMileageEntries();
+    fetchIncomeEntries();
   }, [selectedQuarter, selectedYear]);
 
   const getQuarterStartMonth = (quarter) => {
@@ -87,47 +80,8 @@ const MileagePullComponent = () => {
     }
   };
 
-  const calculateTotalMileage = (entries) => {
-    let totalMileage = 0;
-
-    const entriesByDate = entries.reduce((acc, entry) => {
-      const dateStr = entry.date.toDate().toDateString();
-      if (!acc[dateStr]) {
-        acc[dateStr] = [];
-      }
-      acc[dateStr].push(entry);
-      return acc;
-    }, {});
-
-    Object.values(entriesByDate).forEach((dailyEntries) => {
-      let dailyMileage = 0;
-      const startEntry = dailyEntries.find(
-        (entry) => entry.start_end === "start"
-      );
-      const endEntry = dailyEntries.find((entry) => entry.start_end === "end");
-      if (startEntry && endEntry) {
-        dailyMileage = endEntry.mileage - startEntry.mileage;
-      }
-      totalMileage += dailyMileage;
-    });
-
-    return totalMileage;
-  };
-
-  const calculateMileageExpense = (totalMileage) => {
-    const rate = getMileageRate(selectedYear);
-    return totalMileage * rate;
-  };
-
-  const getMileageRate = (year) => {
-    const entry = mileageRates.find((rate) => {
-      const startDate = new Date(rate.startDate);
-      const endDate = new Date(rate.endDate);
-      const selectedDate = new Date(`${year}-01-01`);
-      return selectedDate >= startDate && selectedDate <= endDate;
-    });
-
-    return entry ? entry.rate : 0;
+  const calculateTotalIncome = (entries) => {
+    return entries.reduce((total, entry) => total + entry.amount, 0);
   };
 
   const handleTimeRangeSelect = (quarter, year) => {
@@ -138,15 +92,11 @@ const MileagePullComponent = () => {
   return (
     <div>
       <h1>
-        Total Mileage for {selectedQuarter} {selectedYear}: {totalMileage}
+        Total Income for {selectedQuarter} {selectedYear}: {totalIncome}
       </h1>
-      <h2>
-        Mileage Expense for {selectedQuarter} {selectedYear}: $
-        {mileageExpense.toFixed(2)}
-      </h2>
       <TimeSelectComponent onSelect={handleTimeRangeSelect} />
     </div>
   );
 };
 
-export default MileagePullComponent;
+export default IncomePullComponent;

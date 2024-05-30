@@ -9,24 +9,29 @@ const ExpenseComponent = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+
+    const currentDate = new Date(date);
+    const expenseValue = parseFloat(amount);
+
+    if (isNaN(expenseValue) || !currentDate || !category) {
+      console.error("Invalid expense input.");
+      return;
+    }
+
     const expenseData = {
-      date: date,
-      amount: parseFloat(amount),
+      date: currentDate,
+      amount: expenseValue,
       category: category,
     };
 
     console.log("Expense data to be saved:", expenseData);
 
     try {
-      const firestoreInstance = getFirestore(app);
-      console.log("Firestore instance:", firestoreInstance);
-
-      const expensesCollection = collection(firestoreInstance, "expenses");
-      console.log("Expenses collection reference:", expensesCollection);
-
-      const docRef = await addDoc(expensesCollection, expenseData);
+      const docRef = await addDoc(
+        collection(getFirestore(app), "expenses"),
+        expenseData
+      );
       console.log("Expense document written with ID:", docRef.id);
-
       setDate("");
       setAmount("");
       setCategory("");

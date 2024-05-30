@@ -1,0 +1,45 @@
+/* Reset default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Top navigation bar */
+.top-nav {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+/* Main content area */
+.content-area {
+    padding: 20px;
+    text-align: center;
+}
+
+/* Illustration section */
+.illustration-section {
+    margin-bottom: 20px;
+}
+
+.illustration-image {
+    max-width: 100%;
+    height: auto;
+    width: 200px;
+}
+
+/* Prayer recommendation section */
+.prayer-recommendation {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+/* Bottom navigation menu */
+.bottom-nav {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
