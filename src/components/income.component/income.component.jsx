@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { app } from "../../utils/firebase/firebase.utils";
+import "../../App.scss";
 
 const IncomeComponent = () => {
   const [date, setDate] = useState("");
@@ -41,37 +42,48 @@ const IncomeComponent = () => {
   };
 
   return (
-    <div className="income-container">
-      <h2 className="income-heading">Enter Income</h2>
+    <div>
+      <h2>Enter Income</h2>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label>Date of Income:</label>
-          <input
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            required
-          />
+        <div className="input-group">
+          <div className="input-row">
+            <label>
+              <span>Date of Income:</span>
+              <input
+                className="input"
+                type="date"
+                value={date}
+                onChange={(e) => setDate(e.target.value)}
+                required
+              />
+            </label>
+            <label>
+              <span>Income Amount:</span>
+              <input
+                className="input"
+                type="number"
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                required
+              />
+            </label>
+          </div>
+          <div className="input-row">
+            <label>
+              <span>Income Source:</span>
+              <input
+                className="input"
+                type="text"
+                value={source}
+                onChange={(e) => setSource(e.target.value)}
+                required
+              />
+            </label>
+          </div>
         </div>
-        <div>
-          <label>Income Amount:</label>
-          <input
-            type="number"
-            value={amount}
-            onChange={(e) => setAmount(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Income Source:</label>
-          <input
-            type="text"
-            value={source}
-            onChange={(e) => setSource(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit">Save Income</button>
+        <button className="primary-button" type="submit">
+          Save Income
+        </button>
       </form>
     </div>
   );

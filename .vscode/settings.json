@@ -1,6 +1,9 @@
 {
     "git.ignoreLimitWarning": true,
     "cSpell.words": [
+        "drivermileage",
+        "exporttocsv",
+        "mileagerates",
         "taxprofit",
         "Timeframe",
         "topbar"

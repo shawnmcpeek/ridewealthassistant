@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { firestore } from "../../utils/firebase/firebase.utils";
+import "../../App.scss";
 
 const MileageComponent = () => {
   const [startMileage, setStartMileage] = useState("");
@@ -74,40 +75,68 @@ const MileageComponent = () => {
   };
 
   return (
-    <div>
-      <h2>Mileage Entry</h2>
-      <label>
-        Start Mileage:
-        <input
-          type="number"
-          value={startMileage}
-          onChange={handleStartMileageChange}
-          placeholder={
-            savedStartMileage ? savedStartMileage : "Enter Start Mileage"
-          }
-        />
-      </label>
-      <label>
-        Start Date:
-        <input type="date" value={startDate} onChange={handleStartDateChange} />
-      </label>
-      {/* Button to save start mileage */}
-      <button onClick={handleSaveStartMileage}>Save Start Mileage</button>
-      <label>
-        End Mileage:
-        <input
-          type="number"
-          value={endMileage}
-          onChange={handleEndMileageChange}
-          placeholder="End Mileage"
-        />
-      </label>
-      <label>
-        End Date:
-        <input type="date" value={endDate} onChange={handleEndDateChange} />
-      </label>
-      <button onClick={handleSubmit}>Submit Mileage Data</button>
-    </div>
+    <>
+    <h2>Enter Mileage</h2>
+      <div className="input-group">
+        <div className="input-row">
+          <label>
+            <span>Start Mileage:</span>
+            <input
+              className="input"
+              type="number"
+              name="startMileage"
+              value={startMileage}
+              onChange={handleStartMileageChange}
+              placeholder={
+                savedStartMileage ? savedStartMileage : "Enter Start Mileage"
+              }
+            />
+          </label>
+          <label>
+            <span>Start Date:</span>
+            <input
+              className="input"
+              type="date"
+              name="startDate"
+              value={startDate}
+              onChange={handleStartDateChange}
+            />
+          </label>
+        </div>
+        <button className="primary-button" onClick={handleSaveStartMileage}>
+          Save Start Mileage
+        </button>
+      </div>
+
+      <div className="input-group">
+        <div className="input-row">
+          <label>
+            <span>End Mileage:</span>
+            <input
+              className="input"
+              type="number"
+              name="endMileage"
+              value={endMileage}
+              onChange={handleEndMileageChange}
+              placeholder="End Mileage"
+            />
+          </label>
+          <label>
+            <span>End Date:</span>
+            <input
+              className="input"
+              type="date"
+              name="endDate"
+              value={endDate}
+              onChange={handleEndDateChange}
+            />
+          </label>
+        </div>
+        <button className="primary-button" onClick={handleSubmit}>
+          Submit Mileage Data
+        </button>
+      </div>
+    </>
   );
 };
 
