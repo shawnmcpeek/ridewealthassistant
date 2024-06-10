@@ -4,7 +4,7 @@ import SignInForm from "./login.component.jsx";
 import Profile from "./profile.component.jsx";
 import BugHelpSection from "./bug_contact.component.jsx";
 import FAQComponent from "./faq.component.jsx";
-import "../../App.scss";
+import "../../app3.scss";
 import ExportDataComponent from "./exporttocsv.component.jsx";
 import DisclaimerComponent from "../taxes.component/disclaimer.component.jsx";
 
@@ -12,6 +12,7 @@ function UserComponent({ onRender }) {
   React.useEffect(() => {
     onRender();
   }, [onRender]);
+
   return (
     <div>
       <h2>User</h2>
@@ -38,12 +39,21 @@ function UserComponent({ onRender }) {
         </div>
       </div>
       <Routes>
-        <Route path="login" element={<SignInForm />} />
-        <Route path="profile" element={<Profile />} />
-        <Route path="bug-feature" element={<BugHelpSection />} />
-        <Route path="export" element={<ExportDataComponent />} />
-        <Route path="about" element={<FAQComponent />} />
-        <Route path="legal" element={<DisclaimerComponent />} />
+        <Route path="login" element={<SignInForm onRender={onRender} />} />
+        <Route path="profile" element={<Profile onRender={onRender} />} />
+        <Route
+          path="bug-feature"
+          element={<BugHelpSection onRender={onRender} />}
+        />
+        <Route
+          path="export"
+          element={<ExportDataComponent onRender={onRender} />}
+        />
+        <Route path="about" element={<FAQComponent onRender={onRender} />} />
+        <Route
+          path="legal"
+          element={<DisclaimerComponent onRender={onRender} />}
+        />
       </Routes>
     </div>
   );

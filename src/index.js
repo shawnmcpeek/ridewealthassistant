@@ -1,6 +1,6 @@
 import React from "react";
 import { createRoot } from "react-dom/client";
-import "./App.scss";
+import "./app3.scss";
 import App from "./App3";
 import { auth } from "./utils/firebase/firebase.utils"; // Import Firebase Authentication
 import reportWebVitals from "./reportWebVitals";

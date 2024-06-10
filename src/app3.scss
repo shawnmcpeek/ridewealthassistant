@@ -1,0 +1,112 @@
+// Variables
+$primary-color: #333;
+$background-color: #59515e;
+$secondary-color: #fff;
+$accent-color: rgba(255, 255, 255, 0.1);
+
+// Mixins
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+// General Styles
+header {
+  background-color: rgba(255, 255, 255, 0); // Semi-transparent background
+  color: $primary-color;
+  padding: 10px;
+  text-align: left;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  height: 20px;
+
+  h1 {
+    line-height: 0; // Adjust line-height to 0
+  }
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: $background-color;
+  position: relative;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px;
+  margin-top: 25px;
+  margin-bottom: 60px; // Increased to 60px
+}
+
+// Bottom Navigation
+.bottom-navigation {
+  position: fixed; // Added position: fixed
+  bottom: 0; // Added bottom: 0
+  left: 0; // Added left: 0
+  right: 0; // Added right: 0
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: $primary-color;
+    @include flex-center;
+    height: 60px; // Added height: 60px
+
+    li {
+      a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+        color: $secondary-color;
+        text-decoration: none;
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: $accent-color;
+        }
+        img {
+          width: 24px;
+          height: 24px;
+          margin-bottom: 5px;
+        }
+      }
+    }
+  }
+}
+
+// Link Styles
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+// Flexbox Utilities
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.align-center {
+  align-items: center;
+}

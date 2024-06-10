@@ -1,5 +1,5 @@
 import React from "react";
-//import "../../App.scss";
+//import "../../app3.scss";
 
 function DefaultComponent({ onRender }) {
   React.useEffect(() => {

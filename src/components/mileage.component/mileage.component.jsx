@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { firestore } from "../../utils/firebase/firebase.utils";
-import "../../App.scss";
+import "../../app3.scss";
 
 function MileageComponent({ onRender }) {
   React.useEffect(() => {

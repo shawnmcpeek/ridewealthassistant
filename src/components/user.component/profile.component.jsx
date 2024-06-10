@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../../App.scss";
+import "../../app3.scss";
 
 function Profile({ onRender }) {
   React.useEffect(() => {

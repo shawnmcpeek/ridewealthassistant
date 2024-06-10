@@ -6,7 +6,7 @@ import receiptIcon from "../../assets/icons/icons8-receipt-48.png";
 import taxesIcon from "../../assets/icons/icons8-tax-48.png";
 import userIcon from "../../assets/icons/icons8-user-48.png";
 import homeIcon from "../../assets/icons/icons8-home-64.png";
-import "../../App.scss";
+import "../../app3.scss";
 
 function NavItem({ path, icon, label }) {
   const location = useLocation();

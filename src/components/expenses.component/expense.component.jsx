@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { app } from "../../utils/firebase/firebase.utils";
-import "../../App.scss";
+import "../../app3.scss";
 
 function ExpenseComponent({ onRender }) {
   React.useEffect(() => {
@@ -113,6 +113,6 @@ function ExpenseComponent({ onRender }) {
       </form>
     </div>
   );
-};
+}
 
 export default ExpenseComponent;

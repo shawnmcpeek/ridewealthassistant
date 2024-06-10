@@ -50,10 +50,14 @@ function EstTaxComponent({ onRender }) {
         </div>
       </div>
       <div>
-        {activeCalculator === "gross" && <GrossEstimatedTaxPaymentComponent />}
-        {activeCalculator === "net" && <NetIncomeTaxEstimateComponent />}
+        {activeCalculator === "gross" && (
+          <GrossEstimatedTaxPaymentComponent onRender={onRender} />
+        )}
+        {activeCalculator === "net" && (
+          <NetIncomeTaxEstimateComponent onRender={onRender} />
+        )}
         {activeCalculator === "netNoMileage" && (
-          <TaxEstimationNoMileageComponent />
+          <TaxEstimationNoMileageComponent onRender={onRender} />
         )}
       </div>
     </div>

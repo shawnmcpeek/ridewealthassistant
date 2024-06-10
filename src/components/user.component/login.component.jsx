@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../../App.scss";
+import "../../app3.scss";
 
 import {
   signInAuthUserWithEmailAndPassword,
@@ -86,13 +86,13 @@ function SignInForm({ onRender }) {
             type="button"
             onClick={signInWithGoogle}
           >
-          <img src="/google-icon-logo-svgrepo-com.svg" alt="Google Logo" />
+            <img src="/google-icon-logo-svgrepo-com.svg" alt="Google Logo" />
             Sign In With Google
           </button>
         </div>
       </form>
     </div>
   );
-};
+}
 
 export default SignInForm;

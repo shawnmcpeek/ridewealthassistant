@@ -8,7 +8,7 @@ import EstTaxComponent from "./components/taxes.component/estimated_tax.componen
 import NavbarComponent from "./NavbarComponent.js";
 import DefaultContentComponent from "./components/default.component/default.component.jsx";
 import TopBarComponent from "./components/topbar.component/topbar.component.jsx";
-import "./App.scss";
+import "./app3.scss";
 
 function Dashboard() {
   return (
