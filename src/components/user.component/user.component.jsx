@@ -15,7 +15,6 @@ function UserComponent({ onRender }) {
 
   return (
     <div>
-      <h2>User</h2>
       <div className="input-group">
         <div className="input-row">
           <Link className="primary-button" to="/user/login">

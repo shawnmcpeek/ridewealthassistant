@@ -5,6 +5,7 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
+  createUserWithEmailAndPassword, // Add this import
 } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
@@ -15,7 +16,7 @@ import firebaseConfig from "./firebase.json";
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const auth = getAuth(app);
-const firestore = getFirestore(app); // Define firestore here
+const firestore = getFirestore(app);
 
 // Log the Firestore object for inspection
 console.log("Firestore instance:", firestore);
@@ -39,11 +40,21 @@ const signInAuthUserWithEmailAndPassword = async (email, password) => {
   }
 };
 
+// Define create user with email and password function
+const createAuthUserWithEmailAndPassword = async (email, password) => {
+  try {
+    await createUserWithEmailAndPassword(auth, email, password);
+  } catch (error) {
+    throw error;
+  }
+};
+
 export {
   app,
   analytics,
   auth,
-  firestore, // Export firestore here
+  firestore,
   signInWithGooglePopup,
   signInAuthUserWithEmailAndPassword,
+  createAuthUserWithEmailAndPassword, // Export the new function
 };

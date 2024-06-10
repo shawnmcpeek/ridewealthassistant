@@ -4,6 +4,7 @@ import "../../app3.scss";
 import {
   signInAuthUserWithEmailAndPassword,
   signInWithGooglePopup,
+  createAuthUserWithEmailAndPassword,
 } from "../../utils/firebase/firebase.utils";
 
 function SignInForm({ onRender }) {
@@ -13,11 +14,12 @@ function SignInForm({ onRender }) {
   const [formFields, setFormFields] = useState({
     email: "",
     password: "",
+    confirmPassword: "",
   });
-  const { email, password } = formFields;
+  const { email, password, confirmPassword } = formFields;
 
   const resetFormFields = () => {
-    setFormFields({ email: "", password: "" });
+    setFormFields({ email: "", password: "", confirmPassword: "" });
   };
 
   const signInWithGoogle = async () => {
@@ -31,12 +33,27 @@ function SignInForm({ onRender }) {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+
     try {
-      await signInAuthUserWithEmailAndPassword(email, password);
+      await createAuthUserWithEmailAndPassword(email, password);
       resetFormFields();
     } catch (error) {
-      console.error("User sign-in failed", error);
-      // Handle sign-in error, show message to the user
+      if (error.code === "auth/email-already-in-use") {
+        try {
+          await signInAuthUserWithEmailAndPassword(email, password);
+          resetFormFields();
+        } catch (signInError) {
+          console.error("User sign-in failed", signInError);
+          // Handle sign-in error, show message to the user
+        }
+      } else {
+        console.error("User creation failed", error);
+        // Handle account creation error, show message to the user
+      }
     }
   };
 
@@ -47,8 +64,7 @@ function SignInForm({ onRender }) {
 
   return (
     <div className="sign-in-container">
-      <h2>Already have an account?</h2>
-      <span>Sign in with your email and password</span>
+      <h2>Sign In or Create an Account</h2>
       <form onSubmit={handleSubmit}>
         <div className="input-group">
           <div className="input-row">
@@ -75,18 +91,34 @@ function SignInForm({ onRender }) {
                 value={password}
               />
             </label>
+            <label>
+              <span>Confirm Password</span>
+              <input
+                className="input"
+                type="password"
+                required
+                onChange={handleChange}
+                name="confirmPassword"
+                value={confirmPassword}
+              />
+            </label>
           </div>
         </div>
         <div className="button-group">
           <button className="primary-button" type="submit">
-            Sign In
+            Sign In / Sign Up
           </button>
           <button
             className="primary-button"
             type="button"
             onClick={signInWithGoogle}
           >
-            <img src="/google-icon-logo-svgrepo-com.svg" alt="Google Logo" />
+            <img
+              src="/google-icon-logo-svgrepo-com.svg"
+              alt="Google Logo"
+              height="14"
+              style={{ paddingRight: "5px" }}
+            />
             Sign In With Google
           </button>
         </div>
