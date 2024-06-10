@@ -1,34 +1,42 @@
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { firestore } from "../../utils/firebase/firebase.utils";
 import mileageRates from "../taxes.component/mileagerates";
 import { useEffect } from "react";
 
-const DataFetcher = ({ selectedYear, onSuccess }) => {
+const DataFetcher = ({ selectedYear, onSuccess, userId }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
         console.log("Fetching data for selected year:", selectedYear);
 
-        // Fetch expense entries
-        const expenseSnapshot = await getDocs(
-          collection(firestore, "expenses")
+        // Fetch expense entries for the logged-in user
+        const expenseQuery = query(
+          collection(firestore, "expenses"),
+          where("userId", "==", userId)
         );
+        const expenseSnapshot = await getDocs(expenseQuery);
         const expenseEntries = expenseSnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
 
-        // Fetch mileage entries
-        const mileageSnapshot = await getDocs(
-          collection(firestore, "drivermileage")
+        // Fetch mileage entries for the logged-in user
+        const mileageQuery = query(
+          collection(firestore, "drivermileage"),
+          where("userId", "==", userId)
         );
+        const mileageSnapshot = await getDocs(mileageQuery);
         const mileageEntries = mileageSnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
 
-        // Fetch income entries
-        const incomeSnapshot = await getDocs(collection(firestore, "income"));
+        // Fetch income entries for the logged-in user
+        const incomeQuery = query(
+          collection(firestore, "income"),
+          where("userId", "==", userId)
+        );
+        const incomeSnapshot = await getDocs(incomeQuery);
         const incomeEntries = incomeSnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
@@ -92,10 +100,10 @@ const DataFetcher = ({ selectedYear, onSuccess }) => {
       }
     };
 
-    if (selectedYear !== "") {
+    if (selectedYear !== "" && userId !== "") {
       fetchData();
     }
-  }, [selectedYear]);
+  }, [selectedYear, userId]);
 
   // Helper functions
   const calculateTotalExpenses = (entries) => {

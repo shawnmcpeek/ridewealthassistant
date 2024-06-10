@@ -5,13 +5,13 @@ function Profile({ onRender }) {
   React.useEffect(() => {
     onRender();
   }, [onRender]);
-  const [fullName, setFullName] = useState("John Doe");
-  const [email, setEmail] = useState("johndoe@example.com");
+  const [fullName, setFullName] = useState("The Doctor");
+  const [email, setEmail] = useState("thedoctor@example.com");
   const [phone, setPhone] = useState("(123) 456-7890");
-  const [address, setAddress] = useState("123 Main St, Anytown USA");
-  const [dob, setDob] = useState("1990-05-15");
+  const [address, setAddress] = useState("123 Main St, TARDIS USA");
+  const [dob, setDob] = useState("1990-11-08");
   const [updatedAddress, setUpdatedAddress] = useState(
-    "123 Main St, Anytown USA"
+    "123 Main St, TARDIS USA"
   );
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");

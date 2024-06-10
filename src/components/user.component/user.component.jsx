@@ -8,7 +8,7 @@ import "../../app3.scss";
 import ExportDataComponent from "./exporttocsv.component.jsx";
 import DisclaimerComponent from "../taxes.component/disclaimer.component.jsx";
 
-function UserComponent({ onRender }) {
+function UserComponent({ onRender, onUserSignIn }) {
   React.useEffect(() => {
     onRender();
   }, [onRender]);
@@ -38,7 +38,12 @@ function UserComponent({ onRender }) {
         </div>
       </div>
       <Routes>
-        <Route path="login" element={<SignInForm onRender={onRender} />} />
+        <Route
+          path="login"
+          element={
+            <SignInForm onRender={onRender} onUserSignIn={onUserSignIn} />
+          }
+        />
         <Route path="profile" element={<Profile onRender={onRender} />} />
         <Route
           path="bug-feature"

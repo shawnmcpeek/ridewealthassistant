@@ -3,7 +3,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { firestore } from "../../utils/firebase/firebase.utils";
 import "../../app3.scss";
 
-function MileageComponent({ onRender }) {
+function MileageComponent({ onRender, userId }) {
   React.useEffect(() => {
     onRender();
   }, [onRender]);
@@ -41,12 +41,14 @@ function MileageComponent({ onRender }) {
         date: new Date(startDate),
         mileage: parseInt(startMileage),
         start_end: "start",
+        userId: userId,
       };
 
       const endMileageEntry = {
         date: new Date(endDate),
         mileage: parseInt(endMileage),
         start_end: "end",
+        userId: userId,
       };
 
       // Save startMileageEntry and endMileageEntry to Firestore database

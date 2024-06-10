@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { saveAs } from "file-saver";
 import AnnualDataExportComponent from "./annualdataexport.component";
 
-function ExportDataComponent({ onRender }) {
+function ExportDataComponent({ onRender, userId }) {
   React.useEffect(() => {
     onRender();
   }, [onRender]);
@@ -40,17 +40,23 @@ function ExportDataComponent({ onRender }) {
 
   return (
     <div>
-      <button name="export" className="primary-button" onClick={() => exportToCsv("2023")} disabled={fetchingData}>
+      <button
+        name="export"
+        className="primary-button"
+        onClick={() => exportToCsv("2023")}
+        disabled={fetchingData}
+      >
         {fetchingData ? "Fetching data..." : "Export to CSV"}
       </button>
       {fetchingData && (
         <AnnualDataExportComponent
           onSuccess={handleDataFetchSuccess}
           selectedYear={selectedYear}
+          userId={userId}
         />
       )}
     </div>
   );
-};
+}
 
 export default ExportDataComponent;

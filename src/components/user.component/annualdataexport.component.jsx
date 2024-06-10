@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import TimeSelectComponent from "../time_select.component/time_select.component";
 import DataFetcher from "./data_fetcher.component";
 
-function AnnualDataExportComponent({ onRender, onSuccess }) {
+function AnnualDataExportComponent({ onRender, onSuccess, userId }) {
   React.useEffect(() => {
     onRender();
   }, [onRender]);
@@ -23,10 +23,11 @@ function AnnualDataExportComponent({ onRender, onSuccess }) {
           selectedQuarter={selectedQuarter}
           selectedYear={selectedYear}
           onSuccess={onSuccess} // Pass the onSuccess prop down
+          userId={userId}
         />
       )}
     </div>
-  ); 
-};
+  );
+}
 
 export default AnnualDataExportComponent;

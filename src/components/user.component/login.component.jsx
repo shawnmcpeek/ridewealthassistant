@@ -7,10 +7,11 @@ import {
   createAuthUserWithEmailAndPassword,
 } from "../../utils/firebase/firebase.utils";
 
-function SignInForm({ onRender }) {
+function SignInForm({ onRender, onUserSignIn }) {
   React.useEffect(() => {
     onRender();
   }, [onRender]);
+
   const [formFields, setFormFields] = useState({
     email: "",
     password: "",
@@ -24,7 +25,9 @@ function SignInForm({ onRender }) {
 
   const signInWithGoogle = async () => {
     try {
-      await signInWithGooglePopup();
+      const userCredential = await signInWithGooglePopup();
+      const userId = userCredential.user.uid;
+      onUserSignIn(userId);
     } catch (error) {
       console.error("Google sign-in failed", error);
     }
@@ -39,12 +42,22 @@ function SignInForm({ onRender }) {
     }
 
     try {
-      await createAuthUserWithEmailAndPassword(email, password);
+      const userCredential = await createAuthUserWithEmailAndPassword(
+        email,
+        password
+      );
+      const userId = userCredential.user.uid;
+      onUserSignIn(userId);
       resetFormFields();
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         try {
-          await signInAuthUserWithEmailAndPassword(email, password);
+          const userCredential = await signInAuthUserWithEmailAndPassword(
+            email,
+            password
+          );
+          const userId = userCredential.user.uid;
+          onUserSignIn(userId);
           resetFormFields();
         } catch (signInError) {
           console.error("User sign-in failed", signInError);
@@ -100,6 +113,7 @@ function SignInForm({ onRender }) {
                 onChange={handleChange}
                 name="confirmPassword"
                 value={confirmPassword}
+                placeholder="Skip for existing users"
               />
             </label>
           </div>

@@ -3,7 +3,7 @@ import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { app } from "../../utils/firebase/firebase.utils";
 import "../../app3.scss";
 
-function IncomeComponent({ onRender }) {
+function IncomeComponent({ onRender, userId }) {
   React.useEffect(() => {
     onRender();
   }, [onRender]);
@@ -26,6 +26,7 @@ function IncomeComponent({ onRender }) {
       date: currentDate,
       amount: incomeValue,
       source: source,
+      userId: userId,
     };
 
     console.log("Income data to be saved:", incomeData);

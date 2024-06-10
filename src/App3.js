@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Routes,
@@ -38,7 +38,14 @@ const Header = () => {
     </header>
   );
 };
+
 function App() {
+  const [userId, setUserId] = useState("");
+
+  const handleUserSignIn = (userId) => {
+    setUserId(userId);
+  };
+
   console.log("App component rendered");
 
   return (
@@ -60,6 +67,7 @@ function App() {
               element={
                 <MileageComponent
                   onRender={() => console.log("MileageComponent rendered")}
+                  userId={userId}
                 />
               }
             />
@@ -68,6 +76,7 @@ function App() {
               element={
                 <IncomeComponent
                   onRender={() => console.log("IncomeComponent rendered")}
+                  userId={userId}
                 />
               }
             />
@@ -76,6 +85,7 @@ function App() {
               element={
                 <ExpensesComponent
                   onRender={() => console.log("ExpensesComponent rendered")}
+                  userId={userId}
                 />
               }
             />
@@ -92,6 +102,7 @@ function App() {
               element={
                 <UserComponent
                   onRender={() => console.log("UserComponent rendered")}
+                  onUserSignIn={handleUserSignIn}
                 />
               }
             />

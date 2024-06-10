@@ -3,7 +3,7 @@ import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { app } from "../../utils/firebase/firebase.utils";
 import "../../app3.scss";
 
-function ExpenseComponent({ onRender }) {
+function ExpenseComponent({ onRender, userId }) {
   React.useEffect(() => {
     onRender();
   }, [onRender]);
@@ -26,6 +26,7 @@ function ExpenseComponent({ onRender }) {
       date: currentDate,
       amount: expenseValue,
       category: category,
+      userId: userId,
     };
 
     console.log("Expense data to be saved:", expenseData);
