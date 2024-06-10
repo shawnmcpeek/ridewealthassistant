@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import TimeSelectComponent from "../time_select.component/time_select.component";
 import DataFetcher from "./data_fetcher.component";
 
-const AnnualDataExportComponent = ({ onSuccess }) => {
+function AnnualDataExportComponent({ onRender, onSuccess }) {
+  React.useEffect(() => {
+    onRender();
+  }, [onRender]);
   const [selectedQuarter, setSelectedQuarter] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
 

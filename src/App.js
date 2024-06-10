@@ -1,14 +1,11 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import MileageComponent from "./components/mileage.component/mileage.component";
-import MileagePullComponent from "./components/taxes.component/mileage_pull.component";
 import ExpenseComponent from "./components/expenses.component/expense.component";
 import IncomeComponent from "./components/income.component/income.component.jsx";
-import ExpensePullComponent from "./components/taxes.component/expenses_pull.component.jsx";
-import IncomePullComponent from "./components/taxes.component/income_pull.component.jsx";
 import UserComponent from "./components/user.component/user.component.jsx";
-import EstTaxComponent from "./components/estimated_tax.component.jsx";
-import NavbarComponent from "./components/navbar.component/navbar.component.jsx";
+import EstTaxComponent from "./components/taxes.component/estimated_tax.component.jsx";
+import NavbarComponent from "./NavbarComponent.js";
 import DefaultContentComponent from "./components/default.component/default.component.jsx";
 import TopBarComponent from "./components/topbar.component/topbar.component.jsx";
 import "./App.scss";
@@ -21,17 +18,8 @@ function Dashboard() {
         <Routes>
           <Route path="/" element={<DefaultContentComponent />} />
           <Route path="/mileage" element={<MileageComponent />} />
-          <Route
-            path="/mileage_calculator"
-            element={<MileagePullComponent />}
-          />
           <Route path="/expense" element={<ExpenseComponent />} />
-          <Route
-            path="/expense_calculator"
-            element={<ExpensePullComponent />}
-          />
           <Route path="/income" element={<IncomeComponent />} />
-          <Route path="/income_calculator" element={<IncomePullComponent />} />
           <Route path="/tax_estimates/*" element={<EstTaxComponent />} />
           <Route path="/user/*" element={<UserComponent />} />
         </Routes>

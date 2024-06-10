@@ -3,7 +3,10 @@ import { collection, addDoc } from "firebase/firestore";
 import { firestore } from "../../utils/firebase/firebase.utils";
 import "../../App.scss";
 
-const MileageComponent = () => {
+function MileageComponent({ onRender }) {
+  React.useEffect(() => {
+    onRender();
+  }, [onRender]);
   const [startMileage, setStartMileage] = useState("");
   const [savedStartMileage, setSavedStartMileage] = useState(""); // New state for saved start mileage
   const [startDate, setStartDate] = useState("");
@@ -76,7 +79,7 @@ const MileageComponent = () => {
 
   return (
     <>
-    <h2>Enter Mileage</h2>
+      <h2>Enter Mileage</h2>
       <div className="input-group">
         <div className="input-row">
           <label>
@@ -138,6 +141,6 @@ const MileageComponent = () => {
       </div>
     </>
   );
-};
+}
 
 export default MileageComponent;

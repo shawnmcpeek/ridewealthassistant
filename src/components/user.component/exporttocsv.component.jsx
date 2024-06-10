@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { saveAs } from "file-saver";
 import AnnualDataExportComponent from "./annualdataexport.component";
 
-const ExportDataComponent = () => {
+function ExportDataComponent({ onRender }) {
+  React.useEffect(() => {
+    onRender();
+  }, [onRender]);
   const [fetchingData, setFetchingData] = useState(false);
   const [selectedYear, setSelectedYear] = useState("");
 

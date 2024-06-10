@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import "../../App.scss";
 
-function Profile() {
+function Profile({ onRender }) {
+  React.useEffect(() => {
+    onRender();
+  }, [onRender]);
   const [fullName, setFullName] = useState("John Doe");
   const [email, setEmail] = useState("johndoe@example.com");
   const [phone, setPhone] = useState("(123) 456-7890");

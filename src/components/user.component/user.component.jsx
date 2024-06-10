@@ -8,7 +8,10 @@ import "../../App.scss";
 import ExportDataComponent from "./exporttocsv.component.jsx";
 import DisclaimerComponent from "../taxes.component/disclaimer.component.jsx";
 
-function UserComponent() {
+function UserComponent({ onRender }) {
+  React.useEffect(() => {
+    onRender();
+  }, [onRender]);
   return (
     <div>
       <h2>User</h2>

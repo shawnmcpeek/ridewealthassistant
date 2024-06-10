@@ -1,10 +1,13 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import GrossEstimatedTaxPaymentComponent from "./taxes.component/gross_est_tax.component.jsx";
-import NetIncomeTaxEstimateComponent from "./taxes.component/net_est_tax.component.jsx";
-import TaxEstimationNoMileageComponent from "./taxes.component/net_est_tax_no_miles.component.jsx";
+import GrossEstimatedTaxPaymentComponent from "./gross_est_tax.component.jsx";
+import NetIncomeTaxEstimateComponent from "./net_est_tax.component.jsx";
+import TaxEstimationNoMileageComponent from "./net_est_tax_no_miles.component.jsx";
 
-function EstTaxComponent() {
+function EstTaxComponent({ onRender }) {
+  React.useEffect(() => {
+    onRender();
+  }, [onRender]);
   const navigate = useNavigate();
   const [activeCalculator, setActiveCalculator] = React.useState(null);
 

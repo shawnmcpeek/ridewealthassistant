@@ -1,7 +1,10 @@
 import React from "react";
-import "../../App.scss";
+//import "../../App.scss";
 
-function DefaultContentComponent() {
+function DefaultComponent({ onRender }) {
+  React.useEffect(() => {
+    onRender();
+  }, [onRender]);
   return (
     <div className="main-content">
       <p>
@@ -28,4 +31,4 @@ function DefaultContentComponent() {
   );
 }
 
-export default DefaultContentComponent;
+export default DefaultComponent;

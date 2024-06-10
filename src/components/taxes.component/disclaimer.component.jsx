@@ -1,6 +1,9 @@
 import React from "react";
 
-const DisclaimerComponent = () => {
+function DisclaimerComponent({ onRender }) {
+  React.useEffect(() => {
+    onRender();
+  }, [onRender]);
   return (
     <div>
       <h3>

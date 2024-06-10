@@ -1,7 +1,10 @@
 import React from "react";
 import "../../App.scss";
 
-function BugHelpSection() {
+function BugHelpSection({ onRender }) {
+  React.useEffect(() => {
+    onRender();
+  }, [onRender]);
   return (
     <section className="bug-help-section">
       <h3>

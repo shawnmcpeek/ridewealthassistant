@@ -26,7 +26,10 @@ function AboutParagraphs() {
 }
 
 // Main AboutComponent combining the heading and paragraphs
-function AboutComponent() {
+function AboutComponent({ onRender }) {
+  React.useEffect(() => {
+    onRender();
+  }, [onRender]);
   return (
     <div>
       <AboutHeading />

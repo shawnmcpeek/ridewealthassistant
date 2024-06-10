@@ -3,7 +3,10 @@ import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { app } from "../../utils/firebase/firebase.utils";
 import "../../App.scss";
 
-const ExpenseComponent = () => {
+function ExpenseComponent({ onRender }) {
+  React.useEffect(() => {
+    onRender();
+  }, [onRender]);
   const [date, setDate] = useState("");
   const [amount, setAmount] = useState("");
   const [category, setCategory] = useState("");

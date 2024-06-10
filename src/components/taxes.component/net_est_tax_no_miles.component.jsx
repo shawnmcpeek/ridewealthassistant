@@ -3,7 +3,10 @@ import { collection, getDocs } from "firebase/firestore";
 import { firestore } from "../../utils/firebase/firebase.utils";
 import TimeSelectComponent from "../time_select.component/time_select.component";
 
-const TaxEstimationNoMileageComponent = () => {
+function TaxEstimationNoMileageComponent({ onRender }) {
+  React.useEffect(() => {
+    onRender();
+  }, [onRender]);
   const [selectedQuarter, setSelectedQuarter] = useState("");
   const [selectedYear, setSelectedYear] = useState("");
   const [irsPayment, setIrsPayment] = useState(0);

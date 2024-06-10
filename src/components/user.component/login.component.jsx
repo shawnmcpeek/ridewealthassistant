@@ -6,7 +6,10 @@ import {
   signInWithGooglePopup,
 } from "../../utils/firebase/firebase.utils";
 
-const SignInForm = () => {
+function SignInForm({ onRender }) {
+  React.useEffect(() => {
+    onRender();
+  }, [onRender]);
   const [formFields, setFormFields] = useState({
     email: "",
     password: "",
