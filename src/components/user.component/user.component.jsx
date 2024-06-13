@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import SignInForm from "./login.component.jsx";
+import SignUpForm from "./signup.component.jsx";
 import Profile from "./profile.component.jsx";
 import BugHelpSection from "./bug_contact.component.jsx";
 import FAQComponent from "./faq.component.jsx";
@@ -19,6 +20,9 @@ function UserComponent({ onRender, onUserSignIn }) {
         <div className="input-row">
           <Link className="primary-button" to="/User/Login">
             Login/Logout
+          </Link>
+          <Link className="primary-button" to="/User/Signup">
+            Sign Up
           </Link>
           <Link className="primary-button" to="/User/Profile">
             User Profile
@@ -44,6 +48,7 @@ function UserComponent({ onRender, onUserSignIn }) {
             <SignInForm onRender={onRender} onUserSignIn={onUserSignIn} />
           }
         />
+        <Route path="signup" element={<SignUpForm />} />
         <Route path="profile" element={<Profile onRender={onRender} />} />
         <Route
           path="bug-feature"

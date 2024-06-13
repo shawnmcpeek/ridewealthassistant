@@ -41,8 +41,7 @@ function Profile({ onRender }) {
             <input
               type="text"
               value={fullName}
-              readOnly
-              className="read-only input"
+              className="input"
             />
           </label>
           <label>
