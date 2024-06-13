@@ -61,8 +61,8 @@ function Profile({ onRender }) {
             <input
               type="tel"
               value={phone}
-              readOnly
-              className="read-only input"
+              onChange={(e) => setPhone(e.target.value)}
+              className="input"
             />
           </label>
           <label>
@@ -81,8 +81,8 @@ function Profile({ onRender }) {
             <input
               type="date"
               value={dob}
-              readOnly
-              className="read-only input"
+              onChange={(e) => setDob(e.target.value)}
+              className="input"
             />
           </label>
         </div>

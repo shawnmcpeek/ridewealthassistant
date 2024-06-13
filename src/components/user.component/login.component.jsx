@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../../app3.scss";
-
+import { getFirestore, doc, setDoc } from "firebase/firestore";
 import {
   signInAuthUserWithEmailAndPassword,
   signInWithGooglePopup,
@@ -25,9 +25,20 @@ function SignInForm({ onRender, onUserSignIn }) {
 
   const signInWithGoogle = async () => {
     try {
-      const userCredential = await signInWithGooglePopup();
-      const userId = userCredential.user.uid;
+      const { user } = await signInWithGooglePopup();
+      const userId = user.uid;
       onUserSignIn(userId);
+
+      // Create a new user document in the 'users' collection
+      const userRef = doc(getFirestore(), "users", userId);
+      await setDoc(userRef, {
+        fullName: user.displayName,
+        email: user.email,
+        phone: "", // Set a default value for phone
+        address: "", // Set a default value for address
+        dob: "", // Set a default value for dob
+        createdAt: new Date(),
+      });
     } catch (error) {
       console.error("Google sign-in failed", error);
     }
@@ -42,13 +53,24 @@ function SignInForm({ onRender, onUserSignIn }) {
     }
 
     try {
-      const userCredential = await createAuthUserWithEmailAndPassword(
+      const { user } = await createAuthUserWithEmailAndPassword(
         email,
         password
       );
-      const userId = userCredential.user.uid;
+      const userId = user.uid;
       onUserSignIn(userId);
       resetFormFields();
+
+      // Create a new user document in the 'users' collection
+      const userRef = doc(getFirestore(), "users", userId);
+      await setDoc(userRef, {
+        fullName: "", // Set a default value for fullName
+        email: user.email,
+        phone: "", // Set a default value for phone
+        address: "", // Set a default value for address
+        dob: "", // Set a default value for dob
+        createdAt: new Date(),
+      });
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         try {

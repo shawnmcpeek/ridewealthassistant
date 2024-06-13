@@ -17,22 +17,22 @@ function UserComponent({ onRender, onUserSignIn }) {
     <div>
       <div className="input-group">
         <div className="input-row">
-          <Link className="primary-button" to="/user/login">
+          <Link className="primary-button" to="/User/Login">
             Login/Logout
           </Link>
-          <Link className="primary-button" to="/user/profile">
+          <Link className="primary-button" to="/User/Profile">
             User Profile
           </Link>
-          <Link className="primary-button" to="/user/bug-feature">
+          <Link className="primary-button" to="/User/Bug-Feature">
             Submit a Bug/Feature/Get Help
           </Link>
-          <Link className="primary-button" to="/user/export">
+          <Link className="primary-button" to="/User/Export">
             Export Financial Data
           </Link>
-          <Link className="primary-button" to="/user/about">
+          <Link className="primary-button" to="/User/About">
             About
           </Link>
-          <Link className="primary-button" to="/user/legal">
+          <Link className="primary-button" to="/User/Legal">
             Legal
           </Link>
         </div>
